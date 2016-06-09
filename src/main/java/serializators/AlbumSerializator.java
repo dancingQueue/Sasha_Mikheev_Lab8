@@ -23,12 +23,6 @@ public class AlbumSerializator implements Serializator<Album> {
     private String currentArtistDescription;
     private BufferedReader inputStream;
 
-    public AlbumSerializator() {
-        entityTrackList = null;
-        resultEntityAlbum = null;
-        currentAlbumDescription = null;
-        currentArtistDescription = null;
-    }
     public void serialization(Album album) {
         try {
             EntityAlbum entityAlbum = AlbumConverter.convertToEntityAlbum(album);

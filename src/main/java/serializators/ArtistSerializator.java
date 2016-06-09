@@ -26,14 +26,6 @@ public class ArtistSerializator implements Serializator<Artist> {
     private BufferedReader inputStream;
     private EntityArtist resultEntityArtist;
 
-    public ArtistSerializator() {
-        entityAlbumList = null;
-        entityTrackList = null;
-        currentEntityAlbum = null;
-        currentAlbumDescription = null;
-        currentArtistDescription = null;
-    }
-
     public void serialization(Artist artist) {
         try {
             EntityArtist entityArtist = ArtistConverter.convertToEntityArtist(artist);
