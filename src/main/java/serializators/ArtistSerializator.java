@@ -24,7 +24,7 @@ public class ArtistSerializator implements Serializator<Artist> {
     private String currentAlbumDescription;
     private String currentArtistDescription;
     private BufferedReader inputStream;
-    private EntityArtist entityArtist;
+    private EntityArtist resultEntityArtist;
 
     public ArtistSerializator() {
         entityAlbumList = null;
@@ -89,7 +89,7 @@ public class ArtistSerializator implements Serializator<Artist> {
     private void processArtist() throws RuntimeException {
         try {
             currentArtistDescription = inputStream.readLine();
-            entityArtist = StringParser.parseEntityArtist(currentArtistDescription);
+            resultEntityArtist = StringParser.parseEntityArtist(currentArtistDescription);
             entityAlbumList = new ArrayList<>();
         } catch (IOException e) {
             e.printStackTrace();
@@ -97,30 +97,32 @@ public class ArtistSerializator implements Serializator<Artist> {
     }
 
     public Artist deserialization(String fileName) throws RuntimeException {
-        entityArtist = new EntityArtist();
-        try {
-            FileReader fileReader = new FileReader(fileName);
-            inputStream = new BufferedReader(fileReader);
+        resultEntityArtist = new EntityArtist();
+        try (BufferedReader currentInputStream = new BufferedReader(new FileReader(fileName))){
+
+            inputStream = currentInputStream;
 
             while (inputStream.ready()) {
                 String currentIdentificator = inputStream.readLine();
                 processIdentificator(currentIdentificator);
             }
 
-            if (entityTrackList != null) {
+            if (entityTrackList != null && entityTrackList.size() > 0) {
                 currentEntityAlbum.setEntityAlbumEntityTracks(entityTrackList);
                 entityAlbumList.add(currentEntityAlbum);
+            } else if (entityTrackList != null && entityTrackList.size() == 0) {
+                throw new RuntimeException("Zero tracks is not enough for making an album");
             }
 
             if (entityAlbumList.size() == 0) {
                 throw new RuntimeException("Zero albums in not enough for becoming an artist");
             }
 
-            entityArtist.setEntityAlbumList(entityAlbumList);
-            inputStream.close();
+            resultEntityArtist.setEntityAlbumList(entityAlbumList);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return ArtistConverter.convertToArtist(entityArtist);
+        return ArtistConverter.convertToArtist(resultEntityArtist);
     }
 }

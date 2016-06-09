@@ -4,6 +4,7 @@ import model.Track;
 import serializators.AlbumSerializator;
 import serializators.ArtistSerializator;
 import serializators.TrackSerializator;
+import suppliers.Supplier;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,81 +14,85 @@ import java.util.List;
  */
 public class Run {
 
+    public void printTrack(Track track) {
+        System.out.println("Track name: " + track.getTrackName() + "; Duration: "
+                + track.getTrackLengthInSeconds() + " seconds.");
+    }
+
+    public void printAlbum(Album album) {
+        System.out.println("Album name: " + album.getAlbumName() + "; Genre: " + album.getAlbumGenre() + ".");
+        for (Track track: album.getAlbumTracks()) {
+            printTrack(track);
+        }
+    }
+    public void printArtist(Artist artist) {
+        System.out.println("Artist name: " + artist.getArtistName() + ".");
+        for (Album album: artist.getAlbumList()) {
+            printAlbum(album);
+        }
+    }
+
     public void testTrackSerializator() {
-        Track track = new Track("Save the World!", 365);
+        System.out.println("Test track serialization");
+
+        Track track = Supplier.getTrack();
+        String trackName = track.getTrackName();
+
+        System.out.println("Serialized track");
+        printTrack(track);
 
         TrackSerializator trackSerializator = new TrackSerializator();
-
         trackSerializator.serialization(track);
 
-        Track deserializedTrack = trackSerializator.deserialization("Save the World!.txt");
+        Track deserializedTrack = trackSerializator.deserialization(trackName + ".txt");
 
-        System.out.println(deserializedTrack.getTrackName());
-        System.out.println(deserializedTrack.getTrackLengthInSeconds());
+        System.out.println("Deserialized track");
+        printTrack(deserializedTrack);
     }
 
     public void testAlbumSerializator() {
+        System.out.println("Test album serialization");
 
-        List<Track> trackList = new ArrayList<>();
+        Album album = Supplier.getAlbum(3);
+        String albumName = album.getAlbumName();
 
-        trackList.add(new Track("Prime", 97));
-        trackList.add(new Track("Fibonacci", 144));
-        trackList.add(new Track("Cube", 125));
-        Album album = new Album("Algebra", "Mathcore", trackList);
+        System.out.println("Serialized album");
+        printAlbum(album);
 
         AlbumSerializator albumSerializator = new AlbumSerializator();
 
         albumSerializator.serialization(album);
 
-        Album deserializedAlbum = albumSerializator.deserialization("Algebra.txt");
+        Album deserializedAlbum = albumSerializator.deserialization(albumName + ".txt");
 
-        System.out.println(deserializedAlbum.getAlbumName());
-        System.out.println(deserializedAlbum.getAlbumGenre());
-        System.out.println(deserializedAlbum.getAlbumTracks().size());
+        System.out.println("Deserialized album");
+        printAlbum(deserializedAlbum);
 
     }
 
     public void testArtistSerializator() {
-        List<Track> trackList = new ArrayList<>();
+        System.out.println("Test artist serialization");
+        Artist artist = Supplier.getArtist(2);
+        String artistName = artist.getArtistName();
 
-        trackList.add(new Track("Hate", 150));
-        trackList.add(new Track("Love", 200));
-        trackList.add(new Track("21 floor", 150));
-        Album album = new Album("Lal", "Rock", trackList);
+        System.out.println("Serialized artist");
+        printArtist(artist);
 
-        List<Track> trackList2 = new ArrayList<>();
-
-        trackList2.add(new Track("Repeat", 111));
-        trackList2.add(new Track("Some Track With Long Name", 202));
-        trackList2.add(new Track("22 floor", 33));
-        Album album2 = new Album("Heroes", "Pop-Rock", trackList2);
-
-        List<Album> albums = new ArrayList<>();
-        albums.add(album);
-        albums.add(album2);
-
-        Artist artist = new Artist("Bavid Dowie", albums);
 
         ArtistSerializator artistSerializator = new ArtistSerializator();
 
         artistSerializator.serialization(artist);
 
-        Artist deserializedArtist = new ArtistSerializator().deserialization("Bavid Dowie.txt");
+        Artist deserializedArtist = new ArtistSerializator().deserialization(artistName + ".txt");
 
-    }
-
-    public void test() {
-        TrackSerializator trackSerializator = new TrackSerializator();
-        Track deserializedTrack = trackSerializator.deserialization("Love.txt");
-
-        System.out.println(deserializedTrack.getTrackName());
-        System.out.println(deserializedTrack.getTrackLengthInSeconds());
-
-
+        System.out.println("Deserialized artist");
+        printArtist(deserializedArtist);
     }
 
     public void testAlbumWithZeroTracks() {
+        System.out.println("Test album with zero tracks");
         Album album = new Album("Algebra", "Mathcore", new ArrayList<>());
+        printAlbum(album);
 
         AlbumSerializator albumSerializator = new AlbumSerializator();
 
@@ -101,8 +106,9 @@ public class Run {
     }
 
     public void testArtistWithZeroAlbums() {
+        System.out.println("Test artist with zero albums");
         Artist artist = new Artist("Bavid Dowie", new ArrayList<>());
-
+        printArtist(artist);
         ArtistSerializator artistSerializator = new ArtistSerializator();
 
         artistSerializator.serialization(artist);
@@ -114,10 +120,9 @@ public class Run {
     }
 
     public void run() {
-     /*   testTrackSerializator();
+        testTrackSerializator();
         testAlbumSerializator();
-        testArtistSerializator(); */
-        //test();
+        testArtistSerializator();
         testAlbumWithZeroTracks();
         testArtistWithZeroAlbums();
     }

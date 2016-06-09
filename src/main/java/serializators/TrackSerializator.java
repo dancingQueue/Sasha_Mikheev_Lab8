@@ -26,17 +26,14 @@ public class TrackSerializator implements Serializator<Track> {
 
     public Track deserialization(String fileName) throws RuntimeException{
         EntityTrack resultEntityTrack = new EntityTrack();
-        try
+        try (BufferedReader inputStream = new BufferedReader(new FileReader(fileName));)
         {
-            FileReader fileReader = new FileReader(fileName);
-            BufferedReader inputStream = new BufferedReader(fileReader);
             String currentIdentificator = inputStream.readLine();
             if (!currentIdentificator.equals("Track")) {
                 throw new RuntimeException("Invalid track identificator");
             }
             String trackDescription = inputStream.readLine();
             resultEntityTrack = StringParser.parseEntityTrack(trackDescription);
-            inputStream.close();
         } catch (IOException e) {
             e.printStackTrace();
         }

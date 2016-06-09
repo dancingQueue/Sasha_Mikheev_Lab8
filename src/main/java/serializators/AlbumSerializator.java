@@ -18,14 +18,14 @@ public class AlbumSerializator implements Serializator<Album> {
 
     private List<EntityTrack> entityTrackList;
 
-    private EntityAlbum entityAlbum;
+    private EntityAlbum resultEntityAlbum;
     private String currentAlbumDescription;
     private String currentArtistDescription;
     private BufferedReader inputStream;
 
     public AlbumSerializator() {
         entityTrackList = null;
-        entityAlbum = null;
+        resultEntityAlbum = null;
         currentAlbumDescription = null;
         currentArtistDescription = null;
     }
@@ -56,7 +56,7 @@ public class AlbumSerializator implements Serializator<Album> {
         try {
             EntityTrack entityTrack = StringParser.parseEntityTrack(inputStream.readLine());
             if (entityTrackList == null) {
-                throw new RuntimeException("We have no album yet to add the track!");
+                throw new RuntimeException("We have no album to add the track yet!");
             }
             entityTrackList.add(entityTrack);
 
@@ -68,18 +68,17 @@ public class AlbumSerializator implements Serializator<Album> {
         try {
             entityTrackList = new ArrayList<>();
             currentAlbumDescription = inputStream.readLine();
-            entityAlbum = StringParser.parseEntityAlbum(currentAlbumDescription);
+            resultEntityAlbum = StringParser.parseEntityAlbum(currentAlbumDescription);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
     public Album deserialization(String fileName) throws RuntimeException {
-        entityAlbum = new EntityAlbum();
+        resultEntityAlbum = new EntityAlbum();
+        try (BufferedReader currentInputStream = new BufferedReader(new FileReader(fileName))){
 
-        try {
-            FileReader fileReader = new FileReader(fileName);
-            inputStream = new BufferedReader(fileReader);
+            inputStream = currentInputStream;
 
             while (inputStream.ready()) {
                 String currentIdentificator = inputStream.readLine();
@@ -89,13 +88,13 @@ public class AlbumSerializator implements Serializator<Album> {
                 throw new RuntimeException("Zero tracks is not enough for an album");
             }
 
-            entityAlbum.setEntityAlbumEntityTracks(entityTrackList);
-            inputStream.close();
+            resultEntityAlbum.setEntityAlbumEntityTracks(entityTrackList);
+
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return AlbumConverter.convertToAlbum(entityAlbum);
+        return AlbumConverter.convertToAlbum(resultEntityAlbum);
     }
 
 }
