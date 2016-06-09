@@ -2,6 +2,7 @@ package serializators;
 
 import entities.EntityAlbum;
 import entities.EntityArtist;
+import entities.EntityCatalogue;
 import entities.EntityTrack;
 
 import java.io.PrintStream;
@@ -29,6 +30,14 @@ class WriteInStream {
 
         for (EntityAlbum entityAlbum : entityArtist.getEntityAlbumList()) {
             writeAlbum(entityAlbum, outStream);
+        }
+    }
+    public static void writeCatalogue(EntityCatalogue entityCatalogue, PrintStream outStream) {
+        outStream.println("Catalogue");
+        outStream.println("Name: " + entityCatalogue.getEntityCatalogueName() + ".");
+
+        for (EntityArtist entityArtist: entityCatalogue.getEntityArtistList()) {
+            writeArtist(entityArtist, outStream);
         }
     }
 }

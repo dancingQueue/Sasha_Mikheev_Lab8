@@ -2,6 +2,7 @@ package parsers;
 
 import entities.EntityAlbum;
 import entities.EntityArtist;
+import entities.EntityCatalogue;
 import entities.EntityTrack;
 
 import java.util.regex.Matcher;
@@ -65,4 +66,22 @@ public class StringParser {
 
         return resultEntityArtist;
     }
+
+    public static EntityCatalogue parseEntityCatalogue(String currentString) throws RuntimeException {
+        EntityCatalogue resultEntityCatalogue = new EntityCatalogue();
+
+        Pattern cataloguePattern = Pattern.compile("Name: (..*?)[.]");
+        Matcher catalogueMatcher = cataloguePattern.matcher(currentString);
+
+        if (catalogueMatcher.find()) {
+            String resultCatalogueName = catalogueMatcher.group(1);
+            resultEntityCatalogue.setEntityCatalogueName(resultCatalogueName);
+        } else {
+            throw new RuntimeException("Current string '" + currentString + "' is not a valid catalogue description");
+        }
+
+        
+        return resultEntityCatalogue;
+    }
+
 }
