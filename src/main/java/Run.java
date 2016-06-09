@@ -1,12 +1,12 @@
+import interfaces.Serializator;
 import model.Album;
 import model.Artist;
 import model.Catalogue;
 import model.Track;
-import serializators.*;
+import serializators.CatalogByteSerializator;
+import serializators.CatalogTextSerializator;
 import suppliers.Supplier;
 
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by alexandermiheev on 09.06.16.
@@ -38,143 +38,33 @@ public class Run {
         }
     }
 
-    public void testTrackSerializator() {
-        System.out.println("Test track serialization");
+    public void testSerializator(Serializator<Catalogue> catalogueSerializator) {
 
-        Track track = Supplier.getTrack();
-        String trackName = track.getTrackName();
+        Catalogue catalogue = Supplier.getCatalogue(2);
+        String catalogueName = catalogue.getCatalogueName();
 
-        System.out.println("Serialized track");
-        printTrack(track);
+        System.out.println("Serialized catalogue");
+        printCatalogue(catalogue);
 
-        TrackSerializator trackSerializator = new TrackSerializator();
-        trackSerializator.serialization(track);
+        catalogueSerializator.serialize(catalogue);
 
-        Track deserializedTrack = trackSerializator.deserialization(trackName + ".txt");
+        Catalogue deserializedCatalogue = catalogueSerializator.deserialize(catalogueName);
 
-        System.out.println("Deserialized track");
-        printTrack(deserializedTrack);
-    }
-
-    public void testAlbumSerializator() {
-        System.out.println("Test album serialization");
-
-        Album album = Supplier.getAlbum(3);
-        String albumName = album.getAlbumName();
-
-        System.out.println("Serialized album");
-        printAlbum(album);
-
-        AlbumSerializator albumSerializator = new AlbumSerializator();
-
-        albumSerializator.serialization(album);
-
-        Album deserializedAlbum = albumSerializator.deserialization(albumName + ".txt");
-
-        System.out.println("Deserialized album");
-        printAlbum(deserializedAlbum);
-
-    }
-
-    public void testArtistSerializator() {
-        System.out.println("Test artist serialization");
-        Artist artist = Supplier.getArtist(2);
-        String artistName = artist.getArtistName();
-
-        System.out.println("Serialized artist");
-        printArtist(artist);
-
-
-        ArtistSerializator artistSerializator = new ArtistSerializator();
-
-        artistSerializator.serialization(artist);
-
-        Artist deserializedArtist = new ArtistSerializator().deserialization(artistName + ".txt");
-
-        System.out.println("Deserialized artist");
-        printArtist(deserializedArtist);
-    }
-
-    public void testAlbumWithZeroTracks() {
-        System.out.println("Test album with zero tracks");
-        Album album = new Album("Algebra", "Mathcore", new ArrayList<>());
-        printAlbum(album);
-
-        AlbumSerializator albumSerializator = new AlbumSerializator();
-
-        albumSerializator.serialization(album);
-
-        try {
-            Album deserializedAlbum = albumSerializator.deserialization("Algebra.txt");
-        } catch (RuntimeException e) {
-            System.out.println(e.getLocalizedMessage());
-        }
-    }
-
-    public void testArtistWithZeroAlbums() {
-        System.out.println("Test artist with zero albums");
-        Artist artist = new Artist("Bavid Dowie", new ArrayList<>());
-        printArtist(artist);
-        ArtistSerializator artistSerializator = new ArtistSerializator();
-
-        artistSerializator.serialization(artist);
-        try {
-            Artist deserializedArtist = new ArtistSerializator().deserialization("Bavid Dowie.txt");
-        } catch (RuntimeException e) {
-            System.out.println(e.getLocalizedMessage());
-        }
+        System.out.println("Deserialized catalogue");
+        printCatalogue(deserializedCatalogue);
     }
 
     public void testCatalogueByteSerialization() {
-        System.out.println("Test catalogue serialization");
-        List<Artist> artistList = new ArrayList<>();
-        artistList.add(Supplier.getArtist(2));
-        artistList.add(Supplier.getArtist(3));
-
-        Catalogue catalogue = new Catalogue("Music Library", artistList);
-
-        System.out.println("Serialized catalogue");
-        printCatalogue(catalogue);
-
-        CatalogByteSerializator catalogByteSerializator = new CatalogByteSerializator();
-
-        catalogByteSerializator.serialization(catalogue);
-
-        Catalogue deserializedCatalogue = catalogByteSerializator.deserialization("Music Library.ser");
-
-        System.out.println("Deserialized catalogue");
-        printCatalogue(deserializedCatalogue);
-
+        System.out.println("Test catalogue byte serializator");
+        testSerializator(new CatalogByteSerializator());
     }
 
     public void testCatalogueTextSerialization() {
-        System.out.println("Test catalogue serialization");
-        List<Artist> artistList = new ArrayList<>();
-        artistList.add(Supplier.getArtist(2));
-        artistList.add(Supplier.getArtist(3));
-
-        Catalogue catalogue = new Catalogue("Music Library", artistList);
-
-        System.out.println("Serialized catalogue");
-        printCatalogue(catalogue);
-
-        CatalogTextSerializator catalogTextSerializator = new CatalogTextSerializator();
-
-        catalogTextSerializator.serialization(catalogue);
-
-        Catalogue deserializedCatalogue = catalogTextSerializator.deserialization("Music Library.txt");
-
-        System.out.println("Deserialized catalogue");
-        printCatalogue(deserializedCatalogue);
-
+        System.out.println("Test catalogue text serializator");
+        testSerializator(new CatalogTextSerializator());
     }
 
     public void run() {
-        testTrackSerializator();
-        testAlbumSerializator();
-        testArtistSerializator();
-        testAlbumWithZeroTracks();
-        testArtistWithZeroAlbums();
         testCatalogueByteSerialization();
         testCatalogueTextSerialization();
     }

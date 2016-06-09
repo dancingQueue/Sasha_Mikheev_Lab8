@@ -18,19 +18,20 @@ public class ArtistConverter {
 
         List<EntityAlbum> entityAlbumList = new ArrayList<>();
 
-        for (Album album: albumList) {
+        for (Album album : albumList) {
             entityAlbumList.add(AlbumConverter.convertToEntityAlbum(album));
         }
 
         return new EntityArtist(artistName, entityAlbumList);
     }
+
     public static Artist convertToArtist(EntityArtist entityArtist) {
         String entityArtistName = entityArtist.getEntityArtistName();
         List<EntityAlbum> entityAlbumList = entityArtist.getEntityAlbumList();
 
         List<Album> albumList = new ArrayList<>();
 
-        for (EntityAlbum entityAlbum: entityAlbumList) {
+        for (EntityAlbum entityAlbum : entityAlbumList) {
             albumList.add(AlbumConverter.convertToAlbum(entityAlbum));
         }
 

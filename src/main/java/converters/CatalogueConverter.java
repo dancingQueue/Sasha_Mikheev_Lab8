@@ -16,17 +16,18 @@ public class CatalogueConverter {
         String catalogueName = catalogue.getCatalogueName();
         List<EntityArtist> entityArtistList = new ArrayList<>();
 
-        for (Artist artist: catalogue.getArtistList()) {
+        for (Artist artist : catalogue.getArtistList()) {
             entityArtistList.add(ArtistConverter.convertToEntityArtist(artist));
         }
 
         return new EntityCatalogue(catalogueName, entityArtistList);
     }
+
     public static Catalogue convertToCatalogue(EntityCatalogue entityCatalogue) {
         String entityCatalogueName = entityCatalogue.getEntityCatalogueName();
         List<Artist> artistList = new ArrayList<>();
 
-        for (EntityArtist entityArtist: entityCatalogue.getEntityArtistList()) {
+        for (EntityArtist entityArtist : entityCatalogue.getEntityArtistList()) {
             artistList.add(ArtistConverter.convertToArtist(entityArtist));
         }
 

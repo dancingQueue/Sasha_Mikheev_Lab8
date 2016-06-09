@@ -2,6 +2,7 @@ package suppliers;
 
 import model.Album;
 import model.Artist;
+import model.Catalogue;
 import model.Track;
 
 import java.util.ArrayList;
@@ -16,36 +17,40 @@ public class Supplier {
     private static String[] trackNames = {"Save the World!", "Prime", "Fibonacci", "Cube", "Love", "Hate"};
     private static String[] genreNames = {"Rock", "Hip-hop", "Mathcore", "Pop", "Techno", "Opera", "Ethnic"};
     private static String[] artistNames = {"Benjamin Franklin", "John Gold", "Chris Rock", "Matthew Long", "Vanessa Bright"};
+    private static String[] catalogueNames = {"Music Library", "Encyclopedia", "wiki-music"};
+    private static Random random = new Random();
 
     public static String getAlbumName() {
-        Random random = new Random();
         int amountOfAlbumNames = albumNames.length;
         int index = random.nextInt(amountOfAlbumNames);
         return albumNames[index];
     }
 
     public static String getTrackName() {
-        Random random = new Random();
         int amountOfTrackNames = trackNames.length;
         int index = random.nextInt(amountOfTrackNames);
         return trackNames[index];
     }
 
     public static String getGenreName() {
-        Random random = new Random();
         int amountOfGenreNames = genreNames.length;
         int index = random.nextInt(amountOfGenreNames);
         return genreNames[index];
     }
+
     public static String getArtistName() {
-        Random random = new Random();
         int amountOfArtistNames = artistNames.length;
         int index = random.nextInt(amountOfArtistNames);
         return artistNames[index];
     }
 
+    public static String getCatalogueName() {
+        int amountOfCatalogueNames = catalogueNames.length;
+        int index = random.nextInt(amountOfCatalogueNames);
+        return catalogueNames[index];
+    }
+
     public static Integer getTrackLength() {
-        Random random = new Random();
         return random.nextInt(600);
     }
 
@@ -77,6 +82,19 @@ public class Supplier {
         }
 
         return new Artist(artistName, albumList);
+
+    }
+
+    public static Catalogue getCatalogue(int amountOfArtists) {
+        String catalogueName = getCatalogueName();
+        List<Artist> artistList = new ArrayList<>();
+
+        for (int i = 0; i < amountOfArtists; i++) {
+            Artist currentArtist = getArtist(2);
+            artistList.add(currentArtist);
+        }
+
+        return new Catalogue(catalogueName, artistList);
 
     }
 

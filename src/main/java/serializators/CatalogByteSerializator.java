@@ -12,28 +12,29 @@ import java.io.*;
  */
 public class CatalogByteSerializator implements Serializator<Catalogue> {
 
-    public void serialization(Catalogue catalogue) {
+    public void serialize(Catalogue catalogue) {
         EntityCatalogue entityCatalogue = CatalogueConverter.convertToEntityCatalogue(catalogue);
         String entityCatalogueName = entityCatalogue.getEntityCatalogueName();
+        String outputFileName = entityCatalogueName + ".ser";
         try (ObjectOutputStream outputStream =
-                     new ObjectOutputStream(new FileOutputStream(entityCatalogueName + ".ser"))){
+                     new ObjectOutputStream(new FileOutputStream(outputFileName))) {
             outputStream.writeObject(entityCatalogue);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
 
-    public Catalogue deserialization(String fileName) {
+    public Catalogue deserialize(String catalogueName) {
         EntityCatalogue resultEntityCatalogue = null;
-
-        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(fileName))) {
+        String inputFileName = catalogueName + ".ser";
+        try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(inputFileName))) {
 
             resultEntityCatalogue = (EntityCatalogue) inputStream.readObject();
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         } catch (ClassNotFoundException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
         return CatalogueConverter.convertToCatalogue(resultEntityCatalogue);
     }

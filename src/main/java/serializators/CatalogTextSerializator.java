@@ -32,25 +32,24 @@ public class CatalogTextSerializator implements Serializator<Catalogue> {
     private EntityArtist currentEntityArtist;
     private EntityCatalogue resultEntityCatalogue;
 
-    public void serialization(Catalogue catalogue) {
+    public void serialize(Catalogue catalogue) throws RuntimeException {
         EntityCatalogue entityCatalogue = CatalogueConverter.convertToEntityCatalogue(catalogue);
         try (PrintStream outStream = new PrintStream(entityCatalogue.getEntityCatalogueName() + ".txt");){
             WriteInStream.writeCatalogue(entityCatalogue, outStream);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
 
 
-
-    private void processIdentificator(String currentIdentificator) {
-        if (currentIdentificator.equals("Track")) {
+    private void processIdentificator(String currentIdentificator) throws RuntimeException {
+        if ("Track".equals(currentIdentificator)) {
             processTrack();
-        } else if (currentIdentificator.equals("Artist")) {
+        } else if ("Artist".equals(currentIdentificator)) {
             processArtist();
-        } else if (currentIdentificator.equals("Album")) {
+        } else if ("Album".equals(currentIdentificator)) {
             processAlbum();
-        } else if (currentIdentificator.equals("Catalogue")) {
+        } else if ("Catalogue".equals(currentIdentificator)) {
             processCatalogue();
         } else {
             throw new RuntimeException("No such identificator: " + currentIdentificator);
@@ -66,7 +65,7 @@ public class CatalogTextSerializator implements Serializator<Catalogue> {
             entityTrackList.add(entityTrack);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -86,7 +85,7 @@ public class CatalogTextSerializator implements Serializator<Catalogue> {
             currentAlbumDescription = inputStream.readLine();
             currentEntityAlbum = StringParser.parseEntityAlbum(currentAlbumDescription);
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -107,7 +106,7 @@ public class CatalogTextSerializator implements Serializator<Catalogue> {
             currentEntityArtist = StringParser.parseEntityArtist(currentArtistDescription);
             entityAlbumList = new ArrayList<>();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
 
@@ -117,17 +116,15 @@ public class CatalogTextSerializator implements Serializator<Catalogue> {
             resultEntityCatalogue = StringParser.parseEntityCatalogue(currentCatalogueDescription);
             entityArtistList = new ArrayList<>();
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
     }
 
 
-
-
-    public Catalogue deserialization(String fileName) {
+    public Catalogue deserialize(String catalogueName) {
         resultEntityCatalogue = new EntityCatalogue();
-
-        try (BufferedReader currentInputStream = new BufferedReader(new FileReader(fileName))) {
+        String inputFileName = catalogueName + ".txt";
+        try (BufferedReader currentInputStream = new BufferedReader(new FileReader(inputFileName))) {
             inputStream = currentInputStream;
 
             while (inputStream.ready()) {
@@ -141,7 +138,7 @@ public class CatalogTextSerializator implements Serializator<Catalogue> {
             resultEntityCatalogue.setEntityArtistList(entityArtistList);
 
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new RuntimeException(e.getMessage());
         }
 
         return CatalogueConverter.convertToCatalogue(resultEntityCatalogue);

@@ -4,6 +4,7 @@ import entities.EntityAlbum;
 import entities.EntityArtist;
 import entities.EntityCatalogue;
 import entities.EntityTrack;
+import suppliers.FormatValuesSupplier;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -13,10 +14,24 @@ import java.util.regex.Pattern;
  */
 public class StringParser {
 
+    private static String regexpForStringValues = "(.*)";
+    private static String regexpForIntegerValues = "(\\d*)";
+    private static String valueIdentificatorSeparator = FormatValuesSupplier.getValueIdentificatorSeparator();
+    private static String twoDescriptionSeparator = FormatValuesSupplier.getTwoIdentificatorSeparator();
+
     public static EntityTrack parseEntityTrack(String currentString) throws RuntimeException {
         EntityTrack resultEntityTrack = new EntityTrack();
 
-        Pattern trackPattern = Pattern.compile("Name: (..*?); Duration: (\\d*) seconds.");
+        String trackNameIdentificator = FormatValuesSupplier.getTrackNameIdentificator();
+
+        String regexpForTrackName = trackNameIdentificator + valueIdentificatorSeparator + regexpForStringValues;
+
+        String trackLengthIdentificator = FormatValuesSupplier.getTrackLengthIdentificator();
+        String regexpForTrackLength = trackLengthIdentificator + valueIdentificatorSeparator + regexpForIntegerValues;
+
+        String regexpForTrackDescription = regexpForTrackName + twoDescriptionSeparator + regexpForTrackLength;
+
+        Pattern trackPattern = Pattern.compile(regexpForTrackDescription);
         Matcher trackMatcher = trackPattern.matcher(currentString);
 
         if (trackMatcher.find()) {
@@ -35,7 +50,17 @@ public class StringParser {
     public static EntityAlbum parseEntityAlbum(String currentString) throws RuntimeException {
         EntityAlbum resultEntityAlbum = new EntityAlbum();
 
-        Pattern albumPattern = Pattern.compile("Name: (..*?); Genre: (..*?)[.]");
+        String albumNameIdentificator = FormatValuesSupplier.getAlbumNameIdentificator();
+
+        String regexpForAlbumName = albumNameIdentificator + valueIdentificatorSeparator + regexpForStringValues;
+
+        String albumGenreIdentificator = FormatValuesSupplier.getAlbumGenreIdentificator();
+
+        String regexpForGenreName = albumGenreIdentificator + valueIdentificatorSeparator + regexpForStringValues;
+
+        String regexpForAlbumDescription = regexpForAlbumName + twoDescriptionSeparator + regexpForGenreName;
+
+        Pattern albumPattern = Pattern.compile(regexpForAlbumDescription);
         Matcher albumMatcher = albumPattern.matcher(currentString);
 
         if (albumMatcher.find()) {
@@ -54,7 +79,13 @@ public class StringParser {
     public static EntityArtist parseEntityArtist(String currentString) throws RuntimeException {
         EntityArtist resultEntityArtist = new EntityArtist();
 
-        Pattern artistPattern = Pattern.compile("Name: (..*?)[.]");
+        String artistNameIdentificator = FormatValuesSupplier.getArtistNameIdentificator();
+
+        String regexpForArtistName = artistNameIdentificator + valueIdentificatorSeparator + regexpForStringValues;
+
+        String regexpForArtistDescription = regexpForArtistName;
+
+        Pattern artistPattern = Pattern.compile(regexpForArtistDescription);
         Matcher artistMatcher = artistPattern.matcher(currentString);
 
         if (artistMatcher.find()) {
@@ -70,7 +101,13 @@ public class StringParser {
     public static EntityCatalogue parseEntityCatalogue(String currentString) throws RuntimeException {
         EntityCatalogue resultEntityCatalogue = new EntityCatalogue();
 
-        Pattern cataloguePattern = Pattern.compile("Name: (..*?)[.]");
+        String catalogueNameIdentificator = FormatValuesSupplier.getCatalogueNameIdentificator();
+
+        String regexpForCatalogueName = catalogueNameIdentificator + valueIdentificatorSeparator + regexpForStringValues;
+
+        String regexpForCatalogueDescription = regexpForCatalogueName;
+
+        Pattern cataloguePattern = Pattern.compile(regexpForCatalogueDescription);
         Matcher catalogueMatcher = cataloguePattern.matcher(currentString);
 
         if (catalogueMatcher.find()) {
@@ -80,7 +117,6 @@ public class StringParser {
             throw new RuntimeException("Current string '" + currentString + "' is not a valid catalogue description");
         }
 
-        
         return resultEntityCatalogue;
     }
 
