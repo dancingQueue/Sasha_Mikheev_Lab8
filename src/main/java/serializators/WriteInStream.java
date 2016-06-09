@@ -63,7 +63,6 @@ class WriteInStream {
                 + entityArtist.getEntityArtistName();
 
         String artistDescription = artistNameDescription;
-
         outStream.println(artistDescription);
 
         for (EntityAlbum entityAlbum : entityArtist.getEntityAlbumList()) {

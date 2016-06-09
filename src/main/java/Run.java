@@ -5,7 +5,7 @@ import model.Catalogue;
 import model.Track;
 import serializators.CatalogByteSerializator;
 import serializators.CatalogTextSerializator;
-import suppliers.Supplier;
+import suppliers.EntitiesSupplier;
 
 
 /**
@@ -40,7 +40,7 @@ public class Run {
 
     public void testSerializator(Serializator<Catalogue> catalogueSerializator) {
 
-        Catalogue catalogue = Supplier.getCatalogue(2);
+        Catalogue catalogue = EntitiesSupplier.getCatalogue(2);
         String catalogueName = catalogue.getCatalogueName();
 
         System.out.println("Serialized catalogue");

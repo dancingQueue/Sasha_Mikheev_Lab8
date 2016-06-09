@@ -5,6 +5,5 @@ package interfaces;
  */
 public interface Serializator<T> {
     void serialize(T object);
-
     T deserialize(String fileName);
 }

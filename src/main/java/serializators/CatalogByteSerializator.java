@@ -16,27 +16,31 @@ public class CatalogByteSerializator implements Serializator<Catalogue> {
         EntityCatalogue entityCatalogue = CatalogueConverter.convertToEntityCatalogue(catalogue);
         String entityCatalogueName = entityCatalogue.getEntityCatalogueName();
         String outputFileName = entityCatalogueName + ".ser";
+
         try (ObjectOutputStream outputStream =
                      new ObjectOutputStream(new FileOutputStream(outputFileName))) {
             outputStream.writeObject(entityCatalogue);
         } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException("serialize() exception" + e.getMessage());
         }
     }
 
     public Catalogue deserialize(String catalogueName) {
-        EntityCatalogue resultEntityCatalogue = null;
+        EntityCatalogue entityCatalogue = null;
         String inputFileName = catalogueName + ".ser";
+
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(inputFileName))) {
 
-            resultEntityCatalogue = (EntityCatalogue) inputStream.readObject();
+            entityCatalogue = (EntityCatalogue) inputStream.readObject();
 
         } catch (IOException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException("serialize() exception" + e.getMessage());
         } catch (ClassNotFoundException e) {
-            throw new RuntimeException(e.getMessage());
+            throw new RuntimeException("serialize() exception" + e.getMessage());
         }
-        return CatalogueConverter.convertToCatalogue(resultEntityCatalogue);
+
+        Catalogue resultCatalogue = CatalogueConverter.convertToCatalogue(entityCatalogue);
+        return resultCatalogue;
     }
 
 }

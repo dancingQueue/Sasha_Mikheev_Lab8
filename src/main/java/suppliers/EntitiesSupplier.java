@@ -12,7 +12,7 @@ import java.util.Random;
 /**
  * Created by alexandermiheev on 09.06.16.
  */
-public class Supplier {
+public class EntitiesSupplier {
     private static String[] albumNames = {"Views", "Black", "Lemonade", "Skin", "Blurryface", "Algebra"};
     private static String[] trackNames = {"Save the World!", "Prime", "Fibonacci", "Cube", "Love", "Hate"};
     private static String[] genreNames = {"Rock", "Hip-hop", "Mathcore", "Pop", "Techno", "Opera", "Ethnic"};
