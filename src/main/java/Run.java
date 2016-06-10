@@ -39,7 +39,6 @@ public class Run {
     }
 
     public void testSerializator(Serializator<Catalogue> catalogueSerializator) {
-
         Catalogue catalogue = EntitiesSupplier.getCatalogue(2);
         String catalogueName = catalogue.getCatalogueName();
 

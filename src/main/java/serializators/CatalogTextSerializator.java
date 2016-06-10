@@ -21,6 +21,8 @@ import java.util.List;
  */
 public class CatalogTextSerializator implements Serializator<Catalogue> {
 
+    private static String fileFormat = ".txt";
+
     private List<EntityAlbum> entityAlbumList;
     private List<EntityTrack> entityTrackList;
     private List<EntityArtist> entityArtistList;
@@ -34,13 +36,13 @@ public class CatalogTextSerializator implements Serializator<Catalogue> {
 
     public void serialize(Catalogue catalogue) throws RuntimeException {
         EntityCatalogue entityCatalogue = CatalogueConverter.convertToEntityCatalogue(catalogue);
-
-        try (PrintStream outStream = new PrintStream(entityCatalogue.getEntityCatalogueName() + ".txt");){
+        String outputFileName = entityCatalogue.getEntityCatalogueName() + fileFormat;
+        try (PrintStream outStream = new PrintStream(outputFileName)){
 
             WriteInStream.writeCatalogue(entityCatalogue, outStream);
 
         } catch (IOException e) {
-            throw new RuntimeException("serialize() exception: " + e.getMessage());
+            throw new RuntimeException("serialize() IOException: " + e.getMessage());
         }
     }
 
@@ -70,7 +72,7 @@ public class CatalogTextSerializator implements Serializator<Catalogue> {
             entityTrackList.add(entityTrack);
 
         } catch (IOException e) {
-            throw new RuntimeException("processTrack() exception: " + e.getMessage());
+            throw new RuntimeException("processTrack() IOException: " + e.getMessage());
         }
     }
 
@@ -94,7 +96,7 @@ public class CatalogTextSerializator implements Serializator<Catalogue> {
             currentEntityAlbum = StringParser.parseEntityAlbum(currentAlbumDescription);
 
         } catch (IOException e) {
-            throw new RuntimeException("processAlbum() exception: " + e.getMessage());
+            throw new RuntimeException("processAlbum() IOException: " + e.getMessage());
         }
     }
 
@@ -119,7 +121,7 @@ public class CatalogTextSerializator implements Serializator<Catalogue> {
             entityAlbumList = new ArrayList<>();
 
         } catch (IOException e) {
-            throw new RuntimeException("processArtist() exception: " + e.getMessage());
+            throw new RuntimeException("processArtist() IOException: " + e.getMessage());
         }
     }
 
@@ -131,14 +133,14 @@ public class CatalogTextSerializator implements Serializator<Catalogue> {
             entityArtistList = new ArrayList<>();
 
         } catch (IOException e) {
-            throw new RuntimeException("processCatalogue() exception: " + e.getMessage());
+            throw new RuntimeException("processCatalogue() IOException: " + e.getMessage());
         }
     }
 
 
     public Catalogue deserialize(String catalogueName) {
         resultEntityCatalogue = new EntityCatalogue();
-        String inputFileName = catalogueName + ".txt";
+        String inputFileName = catalogueName + fileFormat;
         try (BufferedReader currentInputStream = new BufferedReader(new FileReader(inputFileName))) {
             inputStream = currentInputStream;
 
@@ -153,7 +155,7 @@ public class CatalogTextSerializator implements Serializator<Catalogue> {
             resultEntityCatalogue.setEntityArtistList(entityArtistList);
 
         } catch (IOException e) {
-            throw new RuntimeException("deserialize() exception: " + e.getMessage());
+            throw new RuntimeException("deserialize() IOException: " + e.getMessage());
         }
         Catalogue resultCatalogue = CatalogueConverter.convertToCatalogue(resultEntityCatalogue);
         return resultCatalogue;
