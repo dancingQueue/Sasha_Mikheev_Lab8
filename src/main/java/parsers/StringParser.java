@@ -14,19 +14,19 @@ import java.util.regex.Pattern;
  */
 public class StringParser {
 
-    private static String regexpForStringValues = "(.*)";
-    private static String regexpForIntegerValues = "(\\d*)";
-    private static String valueIdentificatorSeparator = FormatValuesSupplier.getValueIdentificatorSeparator();
-    private static String twoDescriptionSeparator = FormatValuesSupplier.getTwoIdentificatorSeparator();
+    private static final String regexpForStringValues = "(.*)";
+    private static final String regexpForIntegerValues = "(\\d*)";
+    private static final String valueIdentificatorSeparator = FormatValuesSupplier.valueIdentificatorSeparator;
+    private static final String twoDescriptionSeparator = FormatValuesSupplier.twoIdentificatorSeparator;
 
     public static EntityTrack parseEntityTrack(String currentString) throws RuntimeException {
         EntityTrack resultEntityTrack = new EntityTrack();
 
-        String trackNameIdentificator = FormatValuesSupplier.getTrackNameIdentificator();
+        String trackNameIdentificator = FormatValuesSupplier.trackNameIdentificator;
 
         String regexpForTrackName = trackNameIdentificator + valueIdentificatorSeparator + regexpForStringValues;
 
-        String trackLengthIdentificator = FormatValuesSupplier.getTrackLengthIdentificator();
+        String trackLengthIdentificator = FormatValuesSupplier.trackLengthIdentificator;
         String regexpForTrackLength = trackLengthIdentificator + valueIdentificatorSeparator + regexpForIntegerValues;
 
         String regexpForTrackDescription = regexpForTrackName + twoDescriptionSeparator + regexpForTrackLength;
@@ -50,11 +50,11 @@ public class StringParser {
     public static EntityAlbum parseEntityAlbum(String currentString) throws RuntimeException {
         EntityAlbum resultEntityAlbum = new EntityAlbum();
 
-        String albumNameIdentificator = FormatValuesSupplier.getAlbumNameIdentificator();
+        String albumNameIdentificator = FormatValuesSupplier.albumNameIdentificator;
 
         String regexpForAlbumName = albumNameIdentificator + valueIdentificatorSeparator + regexpForStringValues;
 
-        String albumGenreIdentificator = FormatValuesSupplier.getAlbumGenreIdentificator();
+        String albumGenreIdentificator = FormatValuesSupplier.albumGenreIdentificator;
 
         String regexpForGenreName = albumGenreIdentificator + valueIdentificatorSeparator + regexpForStringValues;
 
@@ -79,7 +79,7 @@ public class StringParser {
     public static EntityArtist parseEntityArtist(String currentString) throws RuntimeException {
         EntityArtist resultEntityArtist = new EntityArtist();
 
-        String artistNameIdentificator = FormatValuesSupplier.getArtistNameIdentificator();
+        String artistNameIdentificator = FormatValuesSupplier.artistNameIdentificator;
 
         String regexpForArtistName = artistNameIdentificator + valueIdentificatorSeparator + regexpForStringValues;
 
@@ -101,7 +101,7 @@ public class StringParser {
     public static EntityCatalogue parseEntityCatalogue(String currentString) throws RuntimeException {
         EntityCatalogue resultEntityCatalogue = new EntityCatalogue();
 
-        String catalogueNameIdentificator = FormatValuesSupplier.getCatalogueNameIdentificator();
+        String catalogueNameIdentificator = FormatValuesSupplier.catalogueNameIdentificator;
 
         String regexpForCatalogueName = catalogueNameIdentificator + valueIdentificatorSeparator + regexpForStringValues;
 

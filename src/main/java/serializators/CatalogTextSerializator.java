@@ -8,6 +8,7 @@ import entities.EntityTrack;
 import interfaces.Serializator;
 import model.Catalogue;
 import parsers.StringParser;
+import suppliers.FormatValuesSupplier;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -21,7 +22,12 @@ import java.util.List;
  */
 public class CatalogTextSerializator implements Serializator<Catalogue> {
 
-    private static String fileFormat = ".txt";
+    private static final String fileFormat = ".txt";
+
+    private static final String trackIdentificator = FormatValuesSupplier.trackIdentificator;
+    private static final String artistIdentificator = FormatValuesSupplier.artistIdentificator;
+    private static final String albumIdetificator = FormatValuesSupplier.albumIdentificator;
+    private static final String catalogueIdetificator = FormatValuesSupplier.catalogueIdentificator;
 
     private List<EntityAlbum> entityAlbumList;
     private List<EntityTrack> entityTrackList;
@@ -48,13 +54,13 @@ public class CatalogTextSerializator implements Serializator<Catalogue> {
 
 
     private void processIdentificator(String currentIdentificator) throws RuntimeException {
-        if ("Track".equals(currentIdentificator)) {
+        if (trackIdentificator.equals(currentIdentificator)) {
             processTrack();
-        } else if ("Artist".equals(currentIdentificator)) {
+        } else if (artistIdentificator.equals(currentIdentificator)) {
             processArtist();
-        } else if ("Album".equals(currentIdentificator)) {
+        } else if (albumIdetificator.equals(currentIdentificator)) {
             processAlbum();
-        } else if ("Catalogue".equals(currentIdentificator)) {
+        } else if (catalogueIdetificator.equals(currentIdentificator)) {
             processCatalogue();
         } else {
             throw new RuntimeException("No such identificator: " + currentIdentificator);

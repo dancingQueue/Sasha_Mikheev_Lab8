@@ -13,18 +13,18 @@ import java.io.PrintStream;
  */
 class WriteInStream {
 
-    private static String valueIdentificatorSeparator = FormatValuesSupplier.getValueIdentificatorSeparator();
-    private static String twoDescriptionSeparator = FormatValuesSupplier.getTwoIdentificatorSeparator();
+    private static String valueIdentificatorSeparator = FormatValuesSupplier.valueIdentificatorSeparator;
+    private static String twoDescriptionSeparator = FormatValuesSupplier.twoIdentificatorSeparator;
 
     public static void writeTrack(EntityTrack entityTrack, PrintStream outStream) {
-        String trackIdentificator = FormatValuesSupplier.getTrackIdentificator();
+        String trackIdentificator = FormatValuesSupplier.trackIdentificator;
         outStream.println(trackIdentificator);
 
-        String nameIdentificator = FormatValuesSupplier.getTrackNameIdentificator();
+        String nameIdentificator = FormatValuesSupplier.trackNameIdentificator;
         String nameDescription = nameIdentificator + valueIdentificatorSeparator
                 + entityTrack.getEntityTrackName();
 
-        String lengthIdentificator = FormatValuesSupplier.getTrackLengthIdentificator();
+        String lengthIdentificator = FormatValuesSupplier.trackLengthIdentificator;
         String lengthDescription = lengthIdentificator + valueIdentificatorSeparator
                 + entityTrack.getEntityTrackLengthInSeconds();
 
@@ -34,14 +34,14 @@ class WriteInStream {
     }
 
     public static void writeAlbum(EntityAlbum entityAlbum, PrintStream outStream) {
-        String albumIdentificator = FormatValuesSupplier.getAlbumIdentificator();
+        String albumIdentificator = FormatValuesSupplier.albumIdentificator;
         outStream.println(albumIdentificator);
 
-        String albumNameIdentificator = FormatValuesSupplier.getAlbumNameIdentificator();
+        String albumNameIdentificator = FormatValuesSupplier.albumNameIdentificator;
         String albumNameDescription = albumNameIdentificator + valueIdentificatorSeparator
                 + entityAlbum.getEntityAlbumName();
 
-        String albumGenreIdentificator = FormatValuesSupplier.getAlbumGenreIdentificator();
+        String albumGenreIdentificator = FormatValuesSupplier.albumGenreIdentificator;
         String albumGenreDescription = albumGenreIdentificator + valueIdentificatorSeparator
                 + entityAlbum.getEntityAlbumGenre();
 
@@ -55,10 +55,10 @@ class WriteInStream {
     }
 
     public static void writeArtist(EntityArtist entityArtist, PrintStream outStream) {
-        String artistIdentificator = FormatValuesSupplier.getArtistIdentificator();
+        String artistIdentificator = FormatValuesSupplier.artistIdentificator;
         outStream.println(artistIdentificator);
 
-        String artistNameIdentificator = FormatValuesSupplier.getArtistNameIdentificator();
+        String artistNameIdentificator = FormatValuesSupplier.artistNameIdentificator;
         String artistNameDescription = artistNameIdentificator + valueIdentificatorSeparator
                 + entityArtist.getEntityArtistName();
 
@@ -71,10 +71,10 @@ class WriteInStream {
     }
 
     public static void writeCatalogue(EntityCatalogue entityCatalogue, PrintStream outStream) {
-        String catalogueIdentificator = FormatValuesSupplier.getCatalogueIdentificator();
+        String catalogueIdentificator = FormatValuesSupplier.catalogueIdentificator;
         outStream.println(catalogueIdentificator);
 
-        String catalogueNameIdentificator = FormatValuesSupplier.getCatalogueNameIdentificator();
+        String catalogueNameIdentificator = FormatValuesSupplier.catalogueNameIdentificator;
         String catalogueNameDescription = catalogueNameIdentificator
                 + valueIdentificatorSeparator + entityCatalogue.getEntityCatalogueName();
 
