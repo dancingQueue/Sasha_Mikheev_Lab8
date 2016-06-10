@@ -6,7 +6,7 @@ package suppliers;
 public class FormatValuesSupplier {
     private static String trackIdentificator = "Track";
     private static String trackNameIdentificator = "Name:";
-    private static String trackLengthIdentificator = "Duration:";
+    private static String trackLengthIdentificator = "Duration in seconds:";
 
     private static String albumIdentificator = "Album";
     private static String albumNameIdentificator = "Name:";
