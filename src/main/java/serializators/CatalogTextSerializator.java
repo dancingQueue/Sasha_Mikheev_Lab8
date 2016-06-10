@@ -22,12 +22,12 @@ import java.util.List;
  */
 public class CatalogTextSerializator implements Serializator<Catalogue> {
 
-    private static final String fileFormat = ".txt";
+    private static final String FILE_FORMAT = ".txt";
 
-    private static final String trackIdentificator = FormatValuesSupplier.trackIdentificator;
-    private static final String artistIdentificator = FormatValuesSupplier.artistIdentificator;
-    private static final String albumIdetificator = FormatValuesSupplier.albumIdentificator;
-    private static final String catalogueIdetificator = FormatValuesSupplier.catalogueIdentificator;
+    private static final String TRACK_IDENTIFICATOR = FormatValuesSupplier.TRACK_IDENTIFICATOR;
+    private static final String ARTIST_IDENTIFICATOR = FormatValuesSupplier.ARTIST_IDENTIFICATOR;
+    private static final String ALBUM_IDENTIFICATOR = FormatValuesSupplier.ALBUM_IDENTIFICATOR;
+    private static final String CATALOGUE_IDENTIFICATOR = FormatValuesSupplier.CATALOGUE_IDENTIFICATOR;
 
     private List<EntityAlbum> entityAlbumList;
     private List<EntityTrack> entityTrackList;
@@ -42,7 +42,7 @@ public class CatalogTextSerializator implements Serializator<Catalogue> {
 
     public void serialize(Catalogue catalogue) throws RuntimeException {
         EntityCatalogue entityCatalogue = CatalogueConverter.convertToEntityCatalogue(catalogue);
-        String outputFileName = entityCatalogue.getEntityCatalogueName() + fileFormat;
+        String outputFileName = entityCatalogue.getEntityCatalogueName() + FILE_FORMAT;
         try (PrintStream outStream = new PrintStream(outputFileName)){
 
             WriteInStream.writeCatalogue(entityCatalogue, outStream);
@@ -54,13 +54,13 @@ public class CatalogTextSerializator implements Serializator<Catalogue> {
 
 
     private void processIdentificator(String currentIdentificator) throws RuntimeException {
-        if (trackIdentificator.equals(currentIdentificator)) {
+        if (TRACK_IDENTIFICATOR.equals(currentIdentificator)) {
             processTrack();
-        } else if (artistIdentificator.equals(currentIdentificator)) {
+        } else if (ARTIST_IDENTIFICATOR.equals(currentIdentificator)) {
             processArtist();
-        } else if (albumIdetificator.equals(currentIdentificator)) {
+        } else if (ALBUM_IDENTIFICATOR.equals(currentIdentificator)) {
             processAlbum();
-        } else if (catalogueIdetificator.equals(currentIdentificator)) {
+        } else if (CATALOGUE_IDENTIFICATOR.equals(currentIdentificator)) {
             processCatalogue();
         } else {
             throw new RuntimeException("No such identificator: " + currentIdentificator);
@@ -146,7 +146,7 @@ public class CatalogTextSerializator implements Serializator<Catalogue> {
 
     public Catalogue deserialize(String catalogueName) {
         resultEntityCatalogue = new EntityCatalogue();
-        String inputFileName = catalogueName + fileFormat;
+        String inputFileName = catalogueName + FILE_FORMAT;
         try (BufferedReader currentInputStream = new BufferedReader(new FileReader(inputFileName))) {
             inputStream = currentInputStream;
 

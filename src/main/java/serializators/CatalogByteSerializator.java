@@ -11,12 +11,12 @@ import java.io.*;
  * Created by alexandermiheev on 09.06.16.
  */
 public class CatalogByteSerializator implements Serializator<Catalogue> {
-    private static String fileFormat = ".ser";
+    private static final String FILE_FORMAT = ".ser";
 
     public void serialize(Catalogue catalogue) {
         EntityCatalogue entityCatalogue = CatalogueConverter.convertToEntityCatalogue(catalogue);
         String entityCatalogueName = entityCatalogue.getEntityCatalogueName();
-        String outputFileName = entityCatalogueName + fileFormat;
+        String outputFileName = entityCatalogueName + FILE_FORMAT;
 
         try (ObjectOutputStream outputStream =
                      new ObjectOutputStream(new FileOutputStream(outputFileName))) {
@@ -28,7 +28,7 @@ public class CatalogByteSerializator implements Serializator<Catalogue> {
 
     public Catalogue deserialize(String catalogueName) {
         EntityCatalogue entityCatalogue = null;
-        String inputFileName = catalogueName + fileFormat;
+        String inputFileName = catalogueName + FILE_FORMAT;
 
         try (ObjectInputStream inputStream = new ObjectInputStream(new FileInputStream(inputFileName))) {
 

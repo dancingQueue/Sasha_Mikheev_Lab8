@@ -13,39 +13,39 @@ import java.io.PrintStream;
  */
 class WriteInStream {
 
-    private static String valueIdentificatorSeparator = FormatValuesSupplier.valueIdentificatorSeparator;
-    private static String twoDescriptionSeparator = FormatValuesSupplier.twoIdentificatorSeparator;
+    private static final String VALUE_IDENTIFICATOR_SEPARATOR = FormatValuesSupplier.VALUE_IDENTIFICATOR_SEPARATOR;
+    private static final String TWO_IDENTIFICATOR_SEPARATOR = FormatValuesSupplier.TWO_IDENTIFICATOR_SEPARATOR;
 
     public static void writeTrack(EntityTrack entityTrack, PrintStream outStream) {
-        String trackIdentificator = FormatValuesSupplier.trackIdentificator;
+        String trackIdentificator = FormatValuesSupplier.TRACK_IDENTIFICATOR;
         outStream.println(trackIdentificator);
 
-        String nameIdentificator = FormatValuesSupplier.trackNameIdentificator;
-        String nameDescription = nameIdentificator + valueIdentificatorSeparator
+        String nameIdentificator = FormatValuesSupplier.TRACK_NAME_IDENTIFICATOR;
+        String nameDescription = nameIdentificator + VALUE_IDENTIFICATOR_SEPARATOR
                 + entityTrack.getEntityTrackName();
 
-        String lengthIdentificator = FormatValuesSupplier.trackLengthIdentificator;
-        String lengthDescription = lengthIdentificator + valueIdentificatorSeparator
+        String lengthIdentificator = FormatValuesSupplier.TRACK_LENGTH_IDENTIFICATOR;
+        String lengthDescription = lengthIdentificator + VALUE_IDENTIFICATOR_SEPARATOR
                 + entityTrack.getEntityTrackLengthInSeconds();
 
-        String trackDescription = nameDescription + twoDescriptionSeparator
+        String trackDescription = nameDescription + TWO_IDENTIFICATOR_SEPARATOR
                 + lengthDescription;
         outStream.println(trackDescription);
     }
 
     public static void writeAlbum(EntityAlbum entityAlbum, PrintStream outStream) {
-        String albumIdentificator = FormatValuesSupplier.albumIdentificator;
+        String albumIdentificator = FormatValuesSupplier.ALBUM_IDENTIFICATOR;
         outStream.println(albumIdentificator);
 
-        String albumNameIdentificator = FormatValuesSupplier.albumNameIdentificator;
-        String albumNameDescription = albumNameIdentificator + valueIdentificatorSeparator
+        String albumNameIdentificator = FormatValuesSupplier.ALBUM_NAME_IDENTIFICATOR;
+        String albumNameDescription = albumNameIdentificator + VALUE_IDENTIFICATOR_SEPARATOR
                 + entityAlbum.getEntityAlbumName();
 
-        String albumGenreIdentificator = FormatValuesSupplier.albumGenreIdentificator;
-        String albumGenreDescription = albumGenreIdentificator + valueIdentificatorSeparator
+        String albumGenreIdentificator = FormatValuesSupplier.ALBUM_GENRE_IDENTIFICATOR;
+        String albumGenreDescription = albumGenreIdentificator + VALUE_IDENTIFICATOR_SEPARATOR
                 + entityAlbum.getEntityAlbumGenre();
 
-        String albumDescription = albumNameDescription + twoDescriptionSeparator
+        String albumDescription = albumNameDescription + TWO_IDENTIFICATOR_SEPARATOR
                 + albumGenreDescription;
         outStream.println(albumDescription);
 
@@ -55,11 +55,11 @@ class WriteInStream {
     }
 
     public static void writeArtist(EntityArtist entityArtist, PrintStream outStream) {
-        String artistIdentificator = FormatValuesSupplier.artistIdentificator;
+        String artistIdentificator = FormatValuesSupplier.ARTIST_IDENTIFICATOR;
         outStream.println(artistIdentificator);
 
-        String artistNameIdentificator = FormatValuesSupplier.artistNameIdentificator;
-        String artistDescription = artistNameIdentificator + valueIdentificatorSeparator
+        String artistNameIdentificator = FormatValuesSupplier.ARTIST_NAME_IDENTIFICATOR;
+        String artistDescription = artistNameIdentificator + VALUE_IDENTIFICATOR_SEPARATOR
                 + entityArtist.getEntityArtistName();
 
         outStream.println(artistDescription);
@@ -70,12 +70,12 @@ class WriteInStream {
     }
 
     public static void writeCatalogue(EntityCatalogue entityCatalogue, PrintStream outStream) {
-        String catalogueIdentificator = FormatValuesSupplier.catalogueIdentificator;
+        String catalogueIdentificator = FormatValuesSupplier.CATALOGUE_IDENTIFICATOR;
         outStream.println(catalogueIdentificator);
 
-        String catalogueNameIdentificator = FormatValuesSupplier.catalogueNameIdentificator;
+        String catalogueNameIdentificator = FormatValuesSupplier.CATALOGUE_NAME_IDENTIFICATOR;
         String catalogueDescription = catalogueNameIdentificator
-                + valueIdentificatorSeparator + entityCatalogue.getEntityCatalogueName();
+                + VALUE_IDENTIFICATOR_SEPARATOR + entityCatalogue.getEntityCatalogueName();
 
         outStream.println(catalogueDescription);
 
