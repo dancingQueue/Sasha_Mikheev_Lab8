@@ -81,9 +81,9 @@ public class StringParser {
 
         String artistNameIdentificator = FormatValuesSupplier.artistNameIdentificator;
 
-        String regexpForArtistName = artistNameIdentificator + valueIdentificatorSeparator + regexpForStringValues;
+        String regexpForArtistDescription = artistNameIdentificator
+                + valueIdentificatorSeparator + regexpForStringValues;
 
-        String regexpForArtistDescription = regexpForArtistName;
 
         Pattern artistPattern = Pattern.compile(regexpForArtistDescription);
         Matcher artistMatcher = artistPattern.matcher(currentString);
@@ -103,9 +103,8 @@ public class StringParser {
 
         String catalogueNameIdentificator = FormatValuesSupplier.catalogueNameIdentificator;
 
-        String regexpForCatalogueName = catalogueNameIdentificator + valueIdentificatorSeparator + regexpForStringValues;
-
-        String regexpForCatalogueDescription = regexpForCatalogueName;
+        String regexpForCatalogueDescription = catalogueNameIdentificator
+                + valueIdentificatorSeparator + regexpForStringValues;
 
         Pattern cataloguePattern = Pattern.compile(regexpForCatalogueDescription);
         Matcher catalogueMatcher = cataloguePattern.matcher(currentString);

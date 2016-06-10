@@ -59,10 +59,9 @@ class WriteInStream {
         outStream.println(artistIdentificator);
 
         String artistNameIdentificator = FormatValuesSupplier.artistNameIdentificator;
-        String artistNameDescription = artistNameIdentificator + valueIdentificatorSeparator
+        String artistDescription = artistNameIdentificator + valueIdentificatorSeparator
                 + entityArtist.getEntityArtistName();
 
-        String artistDescription = artistNameDescription;
         outStream.println(artistDescription);
 
         for (EntityAlbum entityAlbum : entityArtist.getEntityAlbumList()) {
@@ -75,10 +74,9 @@ class WriteInStream {
         outStream.println(catalogueIdentificator);
 
         String catalogueNameIdentificator = FormatValuesSupplier.catalogueNameIdentificator;
-        String catalogueNameDescription = catalogueNameIdentificator
+        String catalogueDescription = catalogueNameIdentificator
                 + valueIdentificatorSeparator + entityCatalogue.getEntityCatalogueName();
 
-        String catalogueDescription = catalogueNameDescription;
         outStream.println(catalogueDescription);
 
         for (EntityArtist entityArtist : entityCatalogue.getEntityArtistList()) {
